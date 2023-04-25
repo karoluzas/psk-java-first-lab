@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</h:head>
+<h:body>
+    <h2>Doctors:</h2>
+    <ol>
+        <ui:repeat value="#{doctors.allDoctors}" var="doctor">
+            <li><h:link value="#{doctor.name}" outcome="patients?doctor_id=#{doctor.id}" /></li>
+        </ui:repeat>
+    </ol>
+
+    <h2>Create a new doctor:</h2>
+    <h:form>
+        <h:outputLabel value="Name: " for="nameInput" />
+        <h:inputText id="nameInput" value="#{doctors.createdDoctor.name}" required="true" /> <br/>
+        <h:outputLabel value="Surname: " for="surnameInput" />
+        <h:inputText id="surnameInput" value="#{doctors.createdDoctor.surname}" required="true" /> <br/>
+        <h:outputLabel value="Qualification: " for="qualificationInput" />
+        <h:inputText id="qualificationInput" value="#{doctors.createdDoctor.qualification_field}" required="true" /> <br/>
+        <h:outputLabel value="Age: " for="ageInput" />
+        <h:inputText id="ageInput" value="#{doctors.createdDoctor.age}" required="true" /> <br/>
+        <h:commandButton value="Add new doctor" actionListener="#{doctors.createDoctor}" action="index?faces-redirect=true"/>
+    </h:form>
+    <h2>Diagnoses:</h2>
+    <h:dataTable value="#{diagnoses.allDiagnoses}" var="diagnose">
+        <h:column>
+
+            <b><h:outputText value="Diagnosis: #{diagnose.name}" /></b>
+            <h:panelGroup>
+                <ui:repeat value="#{diagnoses.getLoadPatients(diagnose.id)}" var="patient">
+                    <li>Patient: #{patient.name}</li>
+                </ui:repeat>
+            </h:panelGroup>
+
+            <h:form>
+                <h:selectOneMenu value="#{patientsForDiagnoses.selectedPatientId}">
+                    <f:selectItems value="#{patientsForDiagnoses.options}" var="patient" itemValue="#{patient.value}" itemLabel="#{patient.label}" />
+                </h:selectOneMenu>
+                <h:commandButton value="Submit" action="#{patientsForDiagnoses.handleSubmit(diagnose.id)}" />
+            </h:form>
+            <br />
+            <br />
+
+        </h:column>
+    </h:dataTable>
+    <br />
+
+    <h:form>
+        <h:inputText value="#{diagnoses.createdDiagnosis.name}" required="true" />
+        <h:commandButton value="Add new diagnosis" actionListener="#{diagnoses.createDiagnosis}" action="index?faces-redirect=true"/>
+    </h:form>
+
+
+    <h:link value="MyBatis" outcome="myBatis/doctors.xhtml"/>
+
+</h:body>
+</html>

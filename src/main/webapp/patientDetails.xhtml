@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</h:head>
+<h:body>
+    <h2>#{updatePatientDetails.patient.name}</h2>
+    <div>
+        <p>#{updatePatientDetails.patient.age}</p>
+        <p>#{updatePatientDetails.patient.gender}</p>
+        <p>#{updatePatientDetails.patient.email}</p>
+    </div>
+
+    <h:form>
+        <h:outputText value="Age: "/>
+        <h:inputText value="#{updatePatientDetails.patient.age}" required="true"/> <br/>
+
+        <h:outputText value="Gender (M/F): "/>
+        <h:inputText value="#{updatePatientDetails.patient.gender}" required="true"/> <br/>
+
+        <h:outputText value="Email Address: "/>
+        <h:inputText value="#{updatePatientDetails.patient.email}" required="true"/> <br/>
+
+        <h:commandButton value="Update" action="#{updatePatientDetails.updateDetails()}">
+            <f:param name="patient_id" value="#{updatePatientDetails.patient.id}"/>
+        </h:commandButton>
+        <h:outputText value="Value was already modified by other user. If you want to override it - try again" rendered="#{param['error'] == 'optimistic-lock-exception'}" />
+    </h:form>
+    <h2>Diagnoses:</h2>
+
+    <ol>
+        <ui:repeat value="#{patients.getLoadDiagnosis(updatePatientDetails.patient.id)}" var="diagnosis">
+            <li >Diagnosis: #{diagnosis.name}</li>
+        </ui:repeat>
+    </ol>
+
+    <h:link value="Back to doctor page" outcome="index.xhtml"/>
+</h:body>
+</html>

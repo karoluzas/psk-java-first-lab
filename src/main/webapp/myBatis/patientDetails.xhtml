@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+</h:head>
+<h:body>
+    <h2>#{myBatisUpdatePatientDetails.patient.name}</h2>
+    <div>
+        <p>#{myBatisUpdatePatientDetails.patient.age}</p>
+        <p>#{myBatisUpdatePatientDetails.patient.gender}</p>
+        <p>#{myBatisUpdatePatientDetails.patient.email}</p>
+    </div>
+
+    <h:form>
+        <h:outputText value="Age: "/>
+        <h:inputText value="#{myBatisUpdatePatientDetails.patient.age}" required="true"/> <br/>
+
+        <h:outputText value="Gender (M/F): "/>
+        <h:inputText value="#{myBatisUpdatePatientDetails.patient.gender}" required="true"/> <br/>
+
+        <h:outputText value="Email Address: "/>
+        <h:inputText value="#{myBatisUpdatePatientDetails.patient.email}" required="true"/> <br/>
+
+        <h:commandButton value="Update" action="#{myBatisUpdatePatientDetails.updateDetails()}">
+            <f:param name="patient_id" value="#{myBatisUpdatePatientDetails.patient.id}"/>
+        </h:commandButton>
+        <h:outputText value="Value was already modified by other user. If you want to override it - try again" rendered="#{param['error'] == 'optimistic-lock-exception'}" />
+    </h:form>
+
+    <h2>Diagnoses:</h2>
+
+    <ol>
+        <ui:repeat value="#{patients.getLoadDiagnosis(myBatisUpdatePatientDetails.patient.id)}" var="diagnosis">
+            <li>Diagnosis: #{diagnosis.name}</li>
+        </ui:repeat>
+    </ol>
+
+    <h:link value="Back to doctor page" outcome="/myBatis/doctors.xhtml"/>
+</h:body>
+</html>
