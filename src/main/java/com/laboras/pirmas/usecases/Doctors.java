@@ -1,7 +1,11 @@
 package com.laboras.pirmas.usecases;
 
+import com.laboras.pirmas.entities.Diagnosis;
 import com.laboras.pirmas.entities.Doctor;
+import com.laboras.pirmas.entities.Patient;
 import com.laboras.pirmas.persistence.DoctorsDAO;
+import com.laboras.pirmas.persistence.DiagnosisDAO;
+import com.laboras.pirmas.persistence.PatientsDAO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +19,12 @@ import java.util.List;
 public class Doctors {
     @Inject
     private DoctorsDAO doctorsDAO;
+
+    @Inject
+    private DiagnosisDAO diagnosisDAO;
+
+    @Inject
+    private PatientsDAO patientsDAO;
 
     @Getter @Setter
     private Doctor createdDoctor = new Doctor();
@@ -34,5 +44,10 @@ public class Doctors {
 
     private void loadAllDoctors(){
         this.allDoctors = doctorsDAO.loadAll();
+    }
+
+    public List<Diagnosis> getPatientDiagnosis(Patient patient){
+
+        return patientsDAO.getDiagnosisByPatientID(patient.getId());
     }
 }

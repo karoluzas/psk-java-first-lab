@@ -102,6 +102,10 @@ public class Patient {
         this.doctor = doctor;
     }
 
+    @Version
+    @Column(name="OPT_LOCK_VERSION", columnDefinition = "integer default 0")
+    private Integer version;
+
     @ManyToMany(mappedBy = "patients")
     private List<Diagnosis> diagnoses;
     public List<Diagnosis> getDiagnoses() {

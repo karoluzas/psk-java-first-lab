@@ -19,12 +19,15 @@
 
         <table schema="public" tableName="doctor">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+            <ignoreColumn column="opt_lock_version" />
         </table>
         <table schema="public" tableName="patient">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+            <ignoreColumn column="opt_lock_version" />
         </table>
         <table schema="public" tableName="diagnosis">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+            <ignoreColumn column="opt_lock_version" />
         </table>
         <table schema="public" tableName="patient_diagnosis"></table>
     </context>

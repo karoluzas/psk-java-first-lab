@@ -16,6 +16,7 @@
             <li>
                 <h:link value="#{patient.name} #{patient.surname}" outcome="patientDetails?patient_id=#{patient.id}"></h:link>
 <!--                <h:outputText value="#{patient.name} #{patient.surname}"></h:outputText>-->
+                <p>#{patient.diagnoses.size()}</p>
             </li>
         </ui:repeat>
     </ol>
