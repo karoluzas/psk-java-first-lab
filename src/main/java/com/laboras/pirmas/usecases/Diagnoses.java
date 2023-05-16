@@ -3,6 +3,7 @@ package com.laboras.pirmas.usecases;
 import com.laboras.pirmas.entities.Diagnosis;
 import com.laboras.pirmas.entities.Patient;
 import com.laboras.pirmas.persistence.DiagnosisDAO;
+import com.laboras.pirmas.specialize.IDescription;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,9 @@ public class Diagnoses {
     @Getter
     private List<Diagnosis> allDiagnoses;
 
+    @Inject
+    private IDescription description;
+
     @PostConstruct
     public void init(){
         loadAllDiagnoses();
@@ -30,6 +34,7 @@ public class Diagnoses {
 
     @Transactional
     public void createDiagnosis(){
+        this.createdDiagnosis.setDescription(description.generateDescription());
         this.diagnosisDAO.persist(createdDiagnosis);
     }
 
