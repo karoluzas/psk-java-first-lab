@@ -30,6 +30,10 @@ public class PatientsDAO {
         return entity_manager.createNamedQuery("Patient.findAll", Patient.class).getResultList();
     }
 
+    public void delete(Patient patient){
+        this.entity_manager.remove(patient);
+    }
+
     public List<Diagnosis> getDiagnosisByPatientID(Integer patientID){
         Patient patients = entity_manager.find(Patient.class, patientID);
         if (patients != null){
