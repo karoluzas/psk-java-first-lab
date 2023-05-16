@@ -1,12 +1,15 @@
-package com.laboras.pirmas.services;
+package com.laboras.pirmas.alternative;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 import java.io.Serializable;
 import java.util.Random;
 
+@Alternative
 @ApplicationScoped
-public class RandomEmailGenerator implements  Serializable{
+public class RandomEmailGenerator implements  Serializable, EmailGenerator{
 
+    @Override
     public String generateRandomEmail(){
         Random random = new Random();
         try{

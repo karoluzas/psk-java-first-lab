@@ -1,9 +1,10 @@
 package com.laboras.pirmas.usecases;
 
+import com.laboras.pirmas.alternative.EmailGenerator;
 import com.laboras.pirmas.interceptors.LoggedInvocation;
 import com.laboras.pirmas.persistence.PatientsDAO;
 import com.laboras.pirmas.entities.Patient;
-import com.laboras.pirmas.services.RandomEmailGenerator;
+import com.laboras.pirmas.alternative.RandomEmailGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 @Named
 public class GeneratePatientEmail implements Serializable{
     @Inject
-    RandomEmailGenerator randomEmailGenerator;
+    EmailGenerator emailGenerator;
     @Inject
     private PatientsDAO patientsDAO;
 
@@ -32,7 +33,7 @@ public class GeneratePatientEmail implements Serializable{
     @LoggedInvocation
     public String generateNewRandomEmail(){
         Map<String, String> requestParameters = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        randomEmailGenerationTask = CompletableFuture.supplyAsync(() -> randomEmailGenerator.generateRandomEmail());
+        randomEmailGenerationTask = CompletableFuture.supplyAsync(() -> emailGenerator.generateRandomEmail());
         return "patientDetails?faces-redirect=true&patient_id=" + requestParameters.get("patient_id");
     }
 
