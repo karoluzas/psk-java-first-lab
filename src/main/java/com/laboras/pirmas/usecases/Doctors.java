@@ -1,8 +1,10 @@
 package com.laboras.pirmas.usecases;
 
+import com.laboras.pirmas.decorator.DoctorDecorator;
 import com.laboras.pirmas.entities.Diagnosis;
 import com.laboras.pirmas.entities.Doctor;
 import com.laboras.pirmas.entities.Patient;
+import com.laboras.pirmas.interceptors.LoggedInvocation;
 import com.laboras.pirmas.persistence.DoctorsDAO;
 import com.laboras.pirmas.persistence.DiagnosisDAO;
 import com.laboras.pirmas.persistence.PatientsDAO;
@@ -32,13 +34,18 @@ public class Doctors {
     @Getter
     private List<Doctor> allDoctors;
 
+    @Inject
+    private DoctorDecorator doctorDecorator;
+
     @PostConstruct
     public void init(){
         loadAllDoctors();
     }
 
     @Transactional
+    @LoggedInvocation
     public void createDoctor(){
+        System.out.println("Decoratorius: " + doctorDecorator.DecoratedString(""));
         this.doctorsDAO.persist(createdDoctor);
     }
 

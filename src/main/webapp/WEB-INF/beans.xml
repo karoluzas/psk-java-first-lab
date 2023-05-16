@@ -13,4 +13,7 @@
 <!--        <class>com.laboras.pirmas.alternative.AlternativeRandomEmailGenerator</class>-->
         <class>com.laboras.pirmas.alternative.RandomEmailGenerator</class>
     </alternatives>
+    <decorators>
+        <class>com.laboras.pirmas.decorator.ImplementDecorator</class>
+    </decorators>
 </beans>
